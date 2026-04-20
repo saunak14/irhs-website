@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import site from '../content/site/main.json';
+---
+
+<Base>
+  <Nav />
+  <main>
+    <Hero headline={site.heroHeadline} tagline={site.heroTagline} cta={site.heroCta} />
+    <About title={site.aboutTitle} body={site.aboutBody} />
+    <Contact email={site.contactEmail} linkedin={site.contactLinkedin} />
+  </main>
+</Base>
