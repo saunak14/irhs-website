@@ -1,0 +1,10 @@
+fragment SiteSettingsParts on SiteSettings {
+  __typename
+  heroHeadline
+  heroTagline
+  heroCta
+  aboutTitle
+  aboutBody
+  contactEmail
+  contactLinkedin
+}
