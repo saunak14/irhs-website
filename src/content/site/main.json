@@ -3,7 +3,17 @@
   "heroTagline": "Impacting Business. Positively.",
   "heroCta": "Get in Touch",
   "aboutTitle": "About IRHS Associates",
-  "aboutBody": "IRHS Associates — Ressource Humaine Solutions — is a New Delhi-based leadership and behavioural training and management consulting firm founded in 2016.\n\nWith over 30 years of corporate experience, we bring deep practical insight to every engagement. Our work spans leadership development, behavioural change, and organisational effectiveness — helping teams and leaders perform at their best.\n\nWe have conducted programmes for organisations across sectors, working closely with leadership teams to create lasting impact.",
+  "aboutBody": "IRHS Associates - Influer Ressource Humaine Solutions - is a New Delhi-based HR consulting firm founded in 2016 by Ajaya Kumar Sahoo, a senior HR professional with over 32 years of experience across Power, Infrastructure, Automotive, and Tyre industries in India and abroad.\n\nAjay brings a rare combination of corporate depth and strategic breadth - having served as Global HR Head for the Zenises Group across UAE, South Africa, and Europe, and as General Manager (HR) at Lanco Infratech and Senior Manager (HR) at NTPC, India's largest power company.\n\niRH offers two core service lines: end-to-end HR Consulting covering People Management, Talent Acquisition, and HR Compliance - and Class to Corporate (C2C), a structured 40-hour soft skills programme designed to make fresh campus recruits productive from day one.",
+  "credentials": [
+    { "stat": "32+", "label": "Years Experience" },
+    { "stat": "Global", "label": "HR Head, Dubai" },
+    { "stat": "Thomas", "label": "PPA Licensed" },
+    { "stat": "ISO 9001", "label": "Lead Auditor" },
+    { "stat": "MBA", "label": "FMS, University of Delhi" }
+  ],
+  "servicesTitle": "My Services",
+  "hrConsultingDesc": "End-to-end HR solutions tailored to your organisation - from strategy and policy to compliance and talent management.",
+  "c2cDesc": "A structured 40-hour soft skills programme that makes fresh campus recruits corporate-ready from day one — with individual assessment and a customised recommendation report.",
   "contactEmail": "ajaya@irhsassociates.co.in",
   "contactLinkedin": "https://www.linkedin.com/in/ajaya-kumar-sahoo-690997b"
 }

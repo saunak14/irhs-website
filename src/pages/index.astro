@@ -3,6 +3,9 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
+import Credentials from '../components/Credentials.astro';
+import Industries from '../components/Industries.astro';
+import Services from '../components/Services.astro';
 import Contact from '../components/Contact.astro';
 import site from '../content/site/main.json';
 ---
@@ -12,6 +15,9 @@ import site from '../content/site/main.json';
   <main>
     <Hero headline={site.heroHeadline} tagline={site.heroTagline} cta={site.heroCta} />
     <About title={site.aboutTitle} body={site.aboutBody} />
+    <Credentials items={site.credentials} />
+    <Industries />
+    <Services title={site.servicesTitle} hrConsultingDesc={site.hrConsultingDesc} c2cDesc={site.c2cDesc} />
     <Contact email={site.contactEmail} linkedin={site.contactLinkedin} />
   </main>
 </Base>

@@ -165,6 +165,12 @@ export type CollectionDocumentsArgs = {
 
 export type DocumentNode = SiteSettings | Folder;
 
+export type SiteSettingsCredentials = {
+  __typename?: 'SiteSettingsCredentials';
+  stat?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+};
+
 export type SiteSettings = Node & Document & {
   __typename?: 'SiteSettings';
   heroHeadline: Scalars['String']['output'];
@@ -172,6 +178,10 @@ export type SiteSettings = Node & Document & {
   heroCta: Scalars['String']['output'];
   aboutTitle?: Maybe<Scalars['String']['output']>;
   aboutBody?: Maybe<Scalars['String']['output']>;
+  credentials?: Maybe<Array<Maybe<SiteSettingsCredentials>>>;
+  servicesTitle?: Maybe<Scalars['String']['output']>;
+  hrConsultingDesc?: Maybe<Scalars['String']['output']>;
+  c2cDesc?: Maybe<Scalars['String']['output']>;
   contactEmail?: Maybe<Scalars['String']['output']>;
   contactLinkedin?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
@@ -186,12 +196,21 @@ export type StringFilter = {
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type SiteSettingsCredentialsFilter = {
+  stat?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+};
+
 export type SiteSettingsFilter = {
   heroHeadline?: InputMaybe<StringFilter>;
   heroTagline?: InputMaybe<StringFilter>;
   heroCta?: InputMaybe<StringFilter>;
   aboutTitle?: InputMaybe<StringFilter>;
   aboutBody?: InputMaybe<StringFilter>;
+  credentials?: InputMaybe<SiteSettingsCredentialsFilter>;
+  servicesTitle?: InputMaybe<StringFilter>;
+  hrConsultingDesc?: InputMaybe<StringFilter>;
+  c2cDesc?: InputMaybe<StringFilter>;
   contactEmail?: InputMaybe<StringFilter>;
   contactLinkedin?: InputMaybe<StringFilter>;
 };
@@ -274,24 +293,33 @@ export type DocumentMutation = {
   siteSettings?: InputMaybe<SiteSettingsMutation>;
 };
 
+export type SiteSettingsCredentialsMutation = {
+  stat?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type SiteSettingsMutation = {
   heroHeadline?: InputMaybe<Scalars['String']['input']>;
   heroTagline?: InputMaybe<Scalars['String']['input']>;
   heroCta?: InputMaybe<Scalars['String']['input']>;
   aboutTitle?: InputMaybe<Scalars['String']['input']>;
   aboutBody?: InputMaybe<Scalars['String']['input']>;
+  credentials?: InputMaybe<Array<InputMaybe<SiteSettingsCredentialsMutation>>>;
+  servicesTitle?: InputMaybe<Scalars['String']['input']>;
+  hrConsultingDesc?: InputMaybe<Scalars['String']['input']>;
+  c2cDesc?: InputMaybe<Scalars['String']['input']>;
   contactEmail?: InputMaybe<Scalars['String']['input']>;
   contactLinkedin?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type SiteSettingsPartsFragment = { __typename: 'SiteSettings', heroHeadline: string, heroTagline: string, heroCta: string, aboutTitle?: string | null, aboutBody?: string | null, contactEmail?: string | null, contactLinkedin?: string | null };
+export type SiteSettingsPartsFragment = { __typename: 'SiteSettings', heroHeadline: string, heroTagline: string, heroCta: string, aboutTitle?: string | null, aboutBody?: string | null, servicesTitle?: string | null, hrConsultingDesc?: string | null, c2cDesc?: string | null, contactEmail?: string | null, contactLinkedin?: string | null, credentials?: Array<{ __typename: 'SiteSettingsCredentials', stat?: string | null, label?: string | null } | null> | null };
 
 export type SiteSettingsQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type SiteSettingsQuery = { __typename?: 'Query', siteSettings: { __typename: 'SiteSettings', id: string, heroHeadline: string, heroTagline: string, heroCta: string, aboutTitle?: string | null, aboutBody?: string | null, contactEmail?: string | null, contactLinkedin?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type SiteSettingsQuery = { __typename?: 'Query', siteSettings: { __typename: 'SiteSettings', id: string, heroHeadline: string, heroTagline: string, heroCta: string, aboutTitle?: string | null, aboutBody?: string | null, servicesTitle?: string | null, hrConsultingDesc?: string | null, c2cDesc?: string | null, contactEmail?: string | null, contactLinkedin?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, credentials?: Array<{ __typename: 'SiteSettingsCredentials', stat?: string | null, label?: string | null } | null> | null } };
 
 export type SiteSettingsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -303,7 +331,7 @@ export type SiteSettingsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type SiteSettingsConnectionQuery = { __typename?: 'Query', siteSettingsConnection: { __typename?: 'SiteSettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SiteSettingsConnectionEdges', cursor: string, node?: { __typename: 'SiteSettings', id: string, heroHeadline: string, heroTagline: string, heroCta: string, aboutTitle?: string | null, aboutBody?: string | null, contactEmail?: string | null, contactLinkedin?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type SiteSettingsConnectionQuery = { __typename?: 'Query', siteSettingsConnection: { __typename?: 'SiteSettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SiteSettingsConnectionEdges', cursor: string, node?: { __typename: 'SiteSettings', id: string, heroHeadline: string, heroTagline: string, heroCta: string, aboutTitle?: string | null, aboutBody?: string | null, servicesTitle?: string | null, hrConsultingDesc?: string | null, c2cDesc?: string | null, contactEmail?: string | null, contactLinkedin?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, credentials?: Array<{ __typename: 'SiteSettingsCredentials', stat?: string | null, label?: string | null } | null> | null } | null } | null> | null } };
 
 export const SiteSettingsPartsFragmentDoc = gql`
     fragment SiteSettingsParts on SiteSettings {
@@ -313,6 +341,14 @@ export const SiteSettingsPartsFragmentDoc = gql`
   heroCta
   aboutTitle
   aboutBody
+  credentials {
+    __typename
+    stat
+    label
+  }
+  servicesTitle
+  hrConsultingDesc
+  c2cDesc
   contactEmail
   contactLinkedin
 }

@@ -22,8 +22,7 @@ var config_default = defineConfig({
         path: "src/content/site",
         format: "json",
         ui: {
-          allowedActions: { create: false, delete: false },
-          router: () => "/"
+          allowedActions: { create: false, delete: false }
         },
         fields: [
           {
@@ -56,6 +55,36 @@ var config_default = defineConfig({
             ui: {
               component: "textarea"
             }
+          },
+          {
+            type: "object",
+            name: "credentials",
+            label: "Credentials Strip",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.stat })
+            },
+            fields: [
+              { type: "string", name: "stat", label: "Stat / Title" },
+              { type: "string", name: "label", label: "Description" }
+            ]
+          },
+          {
+            type: "string",
+            name: "servicesTitle",
+            label: "Services Section Title"
+          },
+          {
+            type: "string",
+            name: "hrConsultingDesc",
+            label: "HR Consulting Description",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "string",
+            name: "c2cDesc",
+            label: "Class to Corporate Description",
+            ui: { component: "textarea" }
           },
           {
             type: "string",

@@ -5,6 +5,14 @@ fragment SiteSettingsParts on SiteSettings {
   heroCta
   aboutTitle
   aboutBody
+  credentials {
+    __typename
+    stat
+    label
+  }
+  servicesTitle
+  hrConsultingDesc
+  c2cDesc
   contactEmail
   contactLinkedin
 }

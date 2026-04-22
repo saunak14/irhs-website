@@ -87,12 +87,21 @@ type Collection {
 
 union DocumentNode = SiteSettings | Folder
 
+type SiteSettingsCredentials {
+  stat: String
+  label: String
+}
+
 type SiteSettings implements Node & Document {
   heroHeadline: String!
   heroTagline: String!
   heroCta: String!
   aboutTitle: String
   aboutBody: String
+  credentials: [SiteSettingsCredentials]
+  servicesTitle: String
+  hrConsultingDesc: String
+  c2cDesc: String
   contactEmail: String
   contactLinkedin: String
   id: ID!
@@ -107,12 +116,21 @@ input StringFilter {
   in: [String]
 }
 
+input SiteSettingsCredentialsFilter {
+  stat: StringFilter
+  label: StringFilter
+}
+
 input SiteSettingsFilter {
   heroHeadline: StringFilter
   heroTagline: StringFilter
   heroCta: StringFilter
   aboutTitle: StringFilter
   aboutBody: StringFilter
+  credentials: SiteSettingsCredentialsFilter
+  servicesTitle: StringFilter
+  hrConsultingDesc: StringFilter
+  c2cDesc: StringFilter
   contactEmail: StringFilter
   contactLinkedin: StringFilter
 }
@@ -147,12 +165,21 @@ input DocumentMutation {
   siteSettings: SiteSettingsMutation
 }
 
+input SiteSettingsCredentialsMutation {
+  stat: String
+  label: String
+}
+
 input SiteSettingsMutation {
   heroHeadline: String
   heroTagline: String
   heroCta: String
   aboutTitle: String
   aboutBody: String
+  credentials: [SiteSettingsCredentialsMutation]
+  servicesTitle: String
+  hrConsultingDesc: String
+  c2cDesc: String
   contactEmail: String
   contactLinkedin: String
 }

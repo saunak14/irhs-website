@@ -1,0 +1,162 @@
+---
+interface Props {
+  title: string;
+  hrConsultingDesc: string;
+  c2cDesc: string;
+}
+
+const { title, hrConsultingDesc, c2cDesc } = Astro.props;
+---
+
+<section id="services" class="services">
+  <div class="container">
+    <h2 class="services__heading">{title}</h2>
+    <div class="services__grid">
+
+      <div class="services__card">
+        <h3 class="services__card-title">HR Consulting</h3>
+        <p class="services__card-desc">{hrConsultingDesc}</p>
+        <ul class="services__list">
+          <li>
+            <span class="services__list-label">People Management</span>
+            <span class="services__list-detail">Policies &amp; procedures, job analysis, performance management, training &amp; development, succession planning</span>
+          </li>
+          <li>
+            <span class="services__list-label">Talent Acquisition</span>
+            <span class="services__list-detail">Manpower planning, recruitment support, onboarding &amp; orientation</span>
+          </li>
+          <li>
+            <span class="services__list-label">HR Compliance</span>
+            <span class="services__list-detail">Statutory compliance and HR audit</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="services__card">
+        <h3 class="services__card-title">Class to Corporate <span class="services__badge">C2C</span></h3>
+        <p class="services__card-desc">{c2cDesc}</p>
+        <ul class="services__modules">
+          <li>Communication Skills</li>
+          <li>Interpersonal &amp; Social Skills</li>
+          <li>Teamwork</li>
+          <li>Personal Skills</li>
+          <li>Workplace Skills</li>
+          <li>Attitude</li>
+          <li>Media Rules</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--color-off-white);
+    padding-block: var(--space-section);
+  }
+
+  .services__heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 600;
+    color: var(--color-navy);
+    margin-bottom: 3rem;
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 700px) {
+    .services__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .services__card {
+    background: var(--color-white);
+    border-top: 3px solid var(--color-navy);
+    padding: 2rem;
+    border-radius: 2px;
+  }
+
+  .services__card-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .services__badge {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    background: var(--color-navy);
+    color: var(--color-white);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  .services__card-desc {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--color-slate);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .services__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .services__list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .services__list-label {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .services__list-detail {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    color: var(--color-slate);
+    line-height: 1.6;
+  }
+
+  .services__modules {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .services__modules li {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-navy);
+    border: 1px solid var(--color-navy);
+    padding: 0.3rem 0.75rem;
+    border-radius: 2px;
+    opacity: 0.8;
+  }
+</style>
