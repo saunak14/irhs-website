@@ -82,6 +82,8 @@ export type Query = {
   collections: Array<Collection>;
   node: Node;
   document: DocumentNode;
+  posts: Posts;
+  postsConnection: PostsConnection;
   siteSettings: SiteSettings;
   siteSettingsConnection: SiteSettingsConnection;
 };
@@ -108,6 +110,21 @@ export type QueryDocumentArgs = {
 };
 
 
+export type QueryPostsArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryPostsConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PostsFilter>;
+};
+
+
 export type QuerySiteSettingsArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -123,6 +140,7 @@ export type QuerySiteSettingsConnectionArgs = {
 };
 
 export type DocumentFilter = {
+  posts?: InputMaybe<PostsFilter>;
   siteSettings?: InputMaybe<SiteSettingsFilter>;
 };
 
@@ -163,7 +181,68 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = SiteSettings | Folder;
+export type DocumentNode = Posts | SiteSettings | Folder;
+
+export type Posts = Node & Document & {
+  __typename?: 'Posts';
+  title: Scalars['String']['output'];
+  date: Scalars['String']['output'];
+  excerpt?: Maybe<Scalars['String']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type StringFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type DatetimeFilter = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ImageFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type RichTextFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type PostsFilter = {
+  title?: InputMaybe<StringFilter>;
+  date?: InputMaybe<DatetimeFilter>;
+  excerpt?: InputMaybe<StringFilter>;
+  heroImage?: InputMaybe<ImageFilter>;
+  body?: InputMaybe<RichTextFilter>;
+};
+
+export type PostsConnectionEdges = {
+  __typename?: 'PostsConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Posts>;
+};
+
+export type PostsConnection = Connection & {
+  __typename?: 'PostsConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<PostsConnectionEdges>>>;
+};
 
 export type SiteSettingsCredentials = {
   __typename?: 'SiteSettingsCredentials';
@@ -187,13 +266,6 @@ export type SiteSettings = Node & Document & {
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
-};
-
-export type StringFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type SiteSettingsCredentialsFilter = {
@@ -235,6 +307,8 @@ export type Mutation = {
   deleteDocument: DocumentNode;
   createDocument: DocumentNode;
   createFolder: DocumentNode;
+  updatePosts: Posts;
+  createPosts: Posts;
   updateSiteSettings: SiteSettings;
   createSiteSettings: SiteSettings;
 };
@@ -273,6 +347,18 @@ export type MutationCreateFolderArgs = {
 };
 
 
+export type MutationUpdatePostsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PostsMutation;
+};
+
+
+export type MutationCreatePostsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PostsMutation;
+};
+
+
 export type MutationUpdateSiteSettingsArgs = {
   relativePath: Scalars['String']['input'];
   params: SiteSettingsMutation;
@@ -285,12 +371,22 @@ export type MutationCreateSiteSettingsArgs = {
 };
 
 export type DocumentUpdateMutation = {
+  posts?: InputMaybe<PostsMutation>;
   siteSettings?: InputMaybe<SiteSettingsMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DocumentMutation = {
+  posts?: InputMaybe<PostsMutation>;
   siteSettings?: InputMaybe<SiteSettingsMutation>;
+};
+
+export type PostsMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  date?: InputMaybe<Scalars['String']['input']>;
+  excerpt?: InputMaybe<Scalars['String']['input']>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type SiteSettingsCredentialsMutation = {
@@ -312,7 +408,28 @@ export type SiteSettingsMutation = {
   contactLinkedin?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type PostsPartsFragment = { __typename: 'Posts', title: string, date: string, excerpt?: string | null, heroImage?: string | null, body?: any | null };
+
 export type SiteSettingsPartsFragment = { __typename: 'SiteSettings', heroHeadline: string, heroTagline: string, heroCta: string, aboutTitle?: string | null, aboutBody?: string | null, servicesTitle?: string | null, hrConsultingDesc?: string | null, c2cDesc?: string | null, contactEmail?: string | null, contactLinkedin?: string | null, credentials?: Array<{ __typename: 'SiteSettingsCredentials', stat?: string | null, label?: string | null } | null> | null };
+
+export type PostsQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type PostsQuery = { __typename?: 'Query', posts: { __typename: 'Posts', id: string, title: string, date: string, excerpt?: string | null, heroImage?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type PostsConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PostsFilter>;
+}>;
+
+
+export type PostsConnectionQuery = { __typename?: 'Query', postsConnection: { __typename?: 'PostsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PostsConnectionEdges', cursor: string, node?: { __typename: 'Posts', id: string, title: string, date: string, excerpt?: string | null, heroImage?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type SiteSettingsQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -333,6 +450,16 @@ export type SiteSettingsConnectionQueryVariables = Exact<{
 
 export type SiteSettingsConnectionQuery = { __typename?: 'Query', siteSettingsConnection: { __typename?: 'SiteSettingsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SiteSettingsConnectionEdges', cursor: string, node?: { __typename: 'SiteSettings', id: string, heroHeadline: string, heroTagline: string, heroCta: string, aboutTitle?: string | null, aboutBody?: string | null, servicesTitle?: string | null, hrConsultingDesc?: string | null, c2cDesc?: string | null, contactEmail?: string | null, contactLinkedin?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, credentials?: Array<{ __typename: 'SiteSettingsCredentials', stat?: string | null, label?: string | null } | null> | null } | null } | null> | null } };
 
+export const PostsPartsFragmentDoc = gql`
+    fragment PostsParts on Posts {
+  __typename
+  title
+  date
+  excerpt
+  heroImage
+  body
+}
+    `;
 export const SiteSettingsPartsFragmentDoc = gql`
     fragment SiteSettingsParts on SiteSettings {
   __typename
@@ -353,6 +480,63 @@ export const SiteSettingsPartsFragmentDoc = gql`
   contactLinkedin
 }
     `;
+export const PostsDocument = gql`
+    query posts($relativePath: String!) {
+  posts(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PostsParts
+  }
+}
+    ${PostsPartsFragmentDoc}`;
+export const PostsConnectionDocument = gql`
+    query postsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PostsFilter) {
+  postsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PostsParts
+      }
+    }
+  }
+}
+    ${PostsPartsFragmentDoc}`;
 export const SiteSettingsDocument = gql`
     query siteSettings($relativePath: String!) {
   siteSettings(relativePath: $relativePath) {
@@ -413,7 +597,13 @@ export const SiteSettingsConnectionDocument = gql`
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
-      siteSettings(variables: SiteSettingsQueryVariables, options?: C): Promise<{data: SiteSettingsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SiteSettingsQueryVariables, query: string}> {
+      posts(variables: PostsQueryVariables, options?: C): Promise<{data: PostsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PostsQueryVariables, query: string}> {
+        return requester<{data: PostsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PostsQueryVariables, query: string}, PostsQueryVariables>(PostsDocument, variables, options);
+      },
+    postsConnection(variables?: PostsConnectionQueryVariables, options?: C): Promise<{data: PostsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PostsConnectionQueryVariables, query: string}> {
+        return requester<{data: PostsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PostsConnectionQueryVariables, query: string}, PostsConnectionQueryVariables>(PostsConnectionDocument, variables, options);
+      },
+    siteSettings(variables: SiteSettingsQueryVariables, options?: C): Promise<{data: SiteSettingsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SiteSettingsQueryVariables, query: string}> {
         return requester<{data: SiteSettingsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SiteSettingsQueryVariables, query: string}, SiteSettingsQueryVariables>(SiteSettingsDocument, variables, options);
       },
     siteSettingsConnection(variables?: SiteSettingsConnectionQueryVariables, options?: C): Promise<{data: SiteSettingsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SiteSettingsConnectionQueryVariables, query: string}> {

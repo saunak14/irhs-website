@@ -13,6 +13,7 @@
     "tina:build": "tinacms build"
   },
   "dependencies": {
+    "@astrojs/mdx": "^5.0.4",
     "@tinacms/cli": "^2.2.2",
     "astro": "^6.1.8",
     "tinacms": "^3.7.2"

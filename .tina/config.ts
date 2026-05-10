@@ -20,6 +20,52 @@ export default defineConfig({
   schema: {
     collections: [
       {
+        name: 'posts',
+        label: 'Blog Posts',
+        path: 'src/content/posts',
+        format: 'mdx',
+        ui: {
+          router: ({ document }) => `/blog/${document._sys.filename}`,
+          filename: {
+            readonly: false,
+            slugify: (values: { title?: string }) =>
+              values?.title?.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '') ?? '',
+          },
+        },
+        fields: [
+          {
+            type: 'string',
+            name: 'title',
+            label: 'Title',
+            required: true,
+            isTitle: true,
+          },
+          {
+            type: 'datetime',
+            name: 'date',
+            label: 'Date',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'excerpt',
+            label: 'Short Summary',
+            ui: { component: 'textarea' },
+          },
+          {
+            type: 'image',
+            name: 'heroImage',
+            label: 'Featured Image (optional)',
+          },
+          {
+            type: 'rich-text',
+            name: 'body',
+            label: 'Content',
+            isBody: true,
+          },
+        ],
+      },
+      {
         name: 'siteSettings',
         label: 'Site Settings',
         path: 'src/content/site',

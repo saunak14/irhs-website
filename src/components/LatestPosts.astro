@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import BlogCard from './BlogCard.astro';
+
+const allPosts = await getCollection('posts');
+const latestPosts = allPosts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+{latestPosts.length > 0 && (
+  <section class="latest-posts">
+    <div class="container">
+      <div class="latest-posts__header">
+        <h2 class="latest-posts__title">Insights &amp; Updates</h2>
+        <a href="/blog" class="latest-posts__all">View all posts →</a>
+      </div>
+      <div class="latest-posts__grid">
+        {latestPosts.map(post => (
+          <BlogCard
+            title={post.data.title}
+            date={post.data.date}
+            excerpt={post.data.excerpt}
+            heroImage={post.data.heroImage}
+            slug={post.id}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .latest-posts {
+    padding: var(--space-section) 0;
+    background: var(--color-off-white);
+  }
+
+  .latest-posts__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .latest-posts__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    color: var(--color-navy);
+  }
+
+  .latest-posts__all {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-navy);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .latest-posts__all:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .latest-posts__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+</style>

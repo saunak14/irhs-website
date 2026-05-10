@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+const allPosts = await getCollection('posts');
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Base
+  title="Blog — IRHS Associates"
+  description="Insights and updates on leadership, training, and management consulting from Ajaya Kumar Sahoo."
+>
+  <Nav />
+  <main>
+    <section class="blog-hero">
+      <div class="container">
+        <h1 class="blog-hero__title">Insights &amp; Updates</h1>
+        <p class="blog-hero__tagline">Perspectives on leadership, training, and building better organisations.</p>
+      </div>
+    </section>
+
+    <section class="blog-listing">
+      <div class="container">
+        {posts.length === 0
+          ? <p class="blog-listing__empty">No posts yet — check back soon.</p>
+          : (
+            <div class="blog-listing__grid">
+              {posts.map(post => (
+                <BlogCard
+                  title={post.data.title}
+                  date={post.data.date}
+                  excerpt={post.data.excerpt}
+                  heroImage={post.data.heroImage}
+                  slug={post.id}
+                />
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .blog-hero {
+    background: var(--color-navy);
+    padding: clamp(3rem, 8vw, 5rem) 0;
+    text-align: center;
+  }
+
+  .blog-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: 1rem;
+  }
+
+  .blog-hero__tagline {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 520px;
+    margin-inline: auto;
+    line-height: 1.6;
+  }
+
+  .blog-listing {
+    padding: var(--space-section) 0;
+    background: var(--color-off-white);
+    min-height: 40vh;
+  }
+
+  .blog-listing__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .blog-listing__empty {
+    color: var(--color-slate);
+    text-align: center;
+    font-size: 1.1rem;
+    padding: 4rem 0;
+  }
+
+  @media (max-width: 700px) {
+    .blog-listing__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

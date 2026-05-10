@@ -54,11 +54,14 @@ type Query {
   collections: [Collection!]!
   node(id: String): Node!
   document(collection: String, relativePath: String): DocumentNode!
+  posts(relativePath: String): Posts!
+  postsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PostsFilter): PostsConnection!
   siteSettings(relativePath: String): SiteSettings!
   siteSettingsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SiteSettingsFilter): SiteSettingsConnection!
 }
 
 input DocumentFilter {
+  posts: PostsFilter
   siteSettings: SiteSettingsFilter
 }
 
@@ -85,7 +88,65 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = SiteSettings | Folder
+union DocumentNode = Posts | SiteSettings | Folder
+
+type Posts implements Node & Document {
+  title: String!
+  date: String!
+  excerpt: String
+  heroImage: String
+  body: JSON
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input StringFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input DatetimeFilter {
+  after: String
+  before: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input RichTextFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+}
+
+input PostsFilter {
+  title: StringFilter
+  date: DatetimeFilter
+  excerpt: StringFilter
+  heroImage: ImageFilter
+  body: RichTextFilter
+}
+
+type PostsConnectionEdges {
+  cursor: String!
+  node: Posts
+}
+
+type PostsConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [PostsConnectionEdges]
+}
 
 type SiteSettingsCredentials {
   stat: String
@@ -107,13 +168,6 @@ type SiteSettings implements Node & Document {
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
-}
-
-input StringFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-  in: [String]
 }
 
 input SiteSettingsCredentialsFilter {
@@ -152,17 +206,29 @@ type Mutation {
   deleteDocument(collection: String, relativePath: String!): DocumentNode!
   createDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
   createFolder(collection: String, relativePath: String!): DocumentNode!
+  updatePosts(relativePath: String!, params: PostsMutation!): Posts!
+  createPosts(relativePath: String!, params: PostsMutation!): Posts!
   updateSiteSettings(relativePath: String!, params: SiteSettingsMutation!): SiteSettings!
   createSiteSettings(relativePath: String!, params: SiteSettingsMutation!): SiteSettings!
 }
 
 input DocumentUpdateMutation {
+  posts: PostsMutation
   siteSettings: SiteSettingsMutation
   relativePath: String
 }
 
 input DocumentMutation {
+  posts: PostsMutation
   siteSettings: SiteSettingsMutation
+}
+
+input PostsMutation {
+  title: String
+  date: String
+  excerpt: String
+  heroImage: String
+  body: JSON
 }
 
 input SiteSettingsCredentialsMutation {
